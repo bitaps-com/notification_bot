@@ -1,0 +1,11 @@
+[SERVER]
+
+host = 0.0.0.0
+port = 4032
+
+[TELEGRAM]
+
+bot_id = ""
+api_id = ""
+api_hash  = ""
+admin_channel_id = ""

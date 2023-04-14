@@ -1,0 +1,7 @@
+docker stop notification
+docker run --name notification \
+           --rm \
+           --net=host \
+           -v $(pwd)/src:/src/ \
+           -v $(pwd)/config:/config/\
+           -it --entrypoint "/usr/local/bin/gunicorn" notification "main:app"
