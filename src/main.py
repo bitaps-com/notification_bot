@@ -44,14 +44,21 @@ async def status_handler(request):
 
 async def notification_handler(request):
     await request.post()
-    body = await request.json()
+    try:
+        body = await request.json()
+    except:
+        body = {}
     message = body["message"] if "message" in body else ""
     channel_id = body["channel_id"] if "channel_id" in body else 0
     if not message:
         response = {"result": "failed", "error":"empty message"}
         status = 500
     else:
-        await app['bot'].send_message(app['admin_channel_id'], message)
+        try:
+            await app['bot'].send_message(app['admin_channel_id'], message)
+        except ConnectionError:
+            await app['bot'].start(bot_token=app['bot_id'])
+            await app['bot'].send_message(app['admin_channel_id'], message)
         response = {"result": "success"}
         status = 200
         if channel_id:
